@@ -1,5 +1,5 @@
 /**
- * MedChain Indonesia - File-Based Blockchain
+ * Healthcare DID - File-Based Blockchain
  * 
  * Local blockchain simulation yang menyimpan blocks ke file JSON
  * seperti mini Ethereum node. Siap untuk upgrade ke ETH L2 atau Hyperledger.
@@ -97,10 +97,10 @@ class FileBasedBlockchain {
         const genesisTransactions = [{
             type: 'GENESIS',
             data: {
-                message: 'MedChain Indonesia Genesis Block',
+                message: 'Healthcare DID Genesis Block',
                 network: 'medchain-local',
                 version: '1.0.0',
-                creator: 'MedChain Research Team',
+                creator: 'Healthcare DID Research',
                 purpose: 'Healthcare DID Proof of Concept'
             },
             timestamp: this.state.genesisTimestamp,

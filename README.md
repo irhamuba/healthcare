@@ -1,4 +1,4 @@
-# MedChain Indonesia - Healthcare DID PoC
+# Healthcare DID PoC - Blockchain Medical Records
 
 ## 🚀 Quick Start
 ```bash

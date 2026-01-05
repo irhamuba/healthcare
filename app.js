@@ -1,5 +1,5 @@
 /**
- * MedChain Indonesia - Healthcare DID PoC
+ * Healthcare DID PoC
  * Frontend Implementation with Real Backend API
  */
 
@@ -975,5 +975,5 @@ document.getElementById('linkTempForm')?.addEventListener('submit', async (e) =>
 // INITIALIZE
 // ========================================
 
-console.log('MedChain Indonesia - Healthcare DID PoC');
+console.log('Healthcare DID PoC - Blockchain Medical Records');
 console.log('Checking backend status...');

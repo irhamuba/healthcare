@@ -1,5 +1,5 @@
 /**
- * MedChain Indonesia - Healthcare DID PoC Server
+ * Healthcare DID PoC Server
  * 
  * File-based blockchain implementation (like mini Ethereum node)
  * Ready for production upgrade to: ETH L2 (Polygon/Arbitrum) or Hyperledger Fabric
@@ -71,7 +71,7 @@ class FileBasedBlockchain {
     createGenesisBlock() {
         const tx = {
             type: 'GENESIS',
-            data: { message: 'MedChain Indonesia Genesis', version: '1.0.0' },
+            data: { message: 'Healthcare DID Genesis', version: '1.0.0' },
             timestamp: this.state.genesis,
             hash: this.sha256('genesis-' + Date.now())
         };
@@ -540,7 +540,7 @@ app.get('/api/hospitals/:id/staff', (req, res) => {
 const PORT = 8085;
 app.listen(PORT, () => {
     console.log('\n═══════════════════════════════════════════════════════════════');
-    console.log('          MedChain Indonesia - Healthcare DID PoC');
+    console.log('          Healthcare DID PoC Server');
     console.log('          File-Based Blockchain (Like Mini Ethereum Node)');
     console.log('═══════════════════════════════════════════════════════════════\n');
     console.log(`  🚀 Server: http://localhost:${PORT}`);
