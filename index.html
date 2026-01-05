@@ -443,6 +443,38 @@
                         <div id="emergencyLog"></div>
                     </div>
                 </div>
+
+                <!-- TEMP ID to DID Linking -->
+                <div class="card">
+                    <h3>🔗 Link TEMP ID ke DID</h3>
+                    <p class="small">Setelah pasien darurat teridentifikasi, hubungkan TEMP ID ke DID permanen.</p>
+
+                    <form id="linkTempForm" class="form">
+                        <div class="form-group">
+                            <label>TEMP ID</label>
+                            <input type="text" id="linkTempId" placeholder="TEMP-ABC123">
+                        </div>
+                        <div class="form-group">
+                            <label>NIK Pasien (setelah teridentifikasi)</label>
+                            <input type="text" id="linkNik" placeholder="3201234567890001" maxlength="16">
+                        </div>
+                        <div class="form-group">
+                            <label>Metode Identifikasi</label>
+                            <select id="linkMethod">
+                                <option value="family">Keluarga datang</option>
+                                <option value="document">Dokumen ditemukan</option>
+                                <option value="police">Laporan polisi</option>
+                                <option value="recovery">Pasien sadar</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea id="linkNotes" rows="2" placeholder="Keterangan tambahan..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">🔗 Link TEMP ID ke DID</button>
+                    </form>
+                    <div id="linkResult" class="result hidden"></div>
+                </div>
             </section>
 
             <!-- Blockchain View -->

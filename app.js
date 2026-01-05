@@ -864,6 +864,114 @@ async function updateBlockchainView() {
 }
 
 // ========================================
+// TEMP ID TO DID LINKING
+// ========================================
+
+document.getElementById('linkTempForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const tempId = document.getElementById('linkTempId').value.trim();
+    const nik = document.getElementById('linkNik').value.trim();
+    const method = document.getElementById('linkMethod').value;
+    const notes = document.getElementById('linkNotes').value.trim();
+
+    if (!tempId || !nik) {
+        alert('TEMP ID dan NIK wajib diisi');
+        return;
+    }
+
+    if (nik.length !== 16) {
+        alert('NIK harus 16 digit');
+        return;
+    }
+
+    const resultDiv = document.getElementById('linkResult');
+
+    if (useRealAPI) {
+        try {
+            const result = await api('/emergency/link-temp-id', 'POST', {
+                tempId,
+                nik,
+                identificationMethod: method,
+                notes
+            });
+
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `
+                <h4>✅ TEMP ID Berhasil Di-link!</h4>
+                <div class="info-row">
+                    <span class="label">TEMP ID:</span>
+                    <span class="value">${tempId}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Linked to DID:</span>
+                    <span class="value">${result.patient?.did || result.did}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Pasien:</span>
+                    <span class="value">${result.patient?.name || 'N/A'}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">TX Hash:</span>
+                    <span class="value">${result.transaction?.txHash || 'N/A'}</span>
+                </div>
+            `;
+        } catch (error) {
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `
+                <h4 style="color:red;">❌ Gagal</h4>
+                <p>${error.message}</p>
+            `;
+        }
+    } else {
+        // Simulated mode
+        const patient = Database.findByNik(nik);
+
+        if (!patient) {
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `
+                <h4 style="color:red;">❌ Gagal</h4>
+                <p>NIK tidak ditemukan. Pastikan pasien sudah terdaftar.</p>
+            `;
+            return;
+        }
+
+        // Record the linking
+        const tx = BlockchainSimulator.addTransaction('TEMP_ID_LINKED', {
+            tempId,
+            linkedDid: patient.did,
+            method,
+            notes
+        });
+
+        resultDiv.classList.remove('hidden');
+        resultDiv.innerHTML = `
+            <h4>✅ TEMP ID Berhasil Di-link!</h4>
+            <div class="info-row">
+                <span class="label">TEMP ID:</span>
+                <span class="value">${tempId}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Linked to DID:</span>
+                <span class="value">${patient.did}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Pasien:</span>
+                <span class="value">${patient.nama}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">TX Hash:</span>
+                <span class="value">${tx.hash}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Block:</span>
+                <span class="value">#${tx.blockHeight}</span>
+            </div>
+        `;
+    }
+});
+
+// ========================================
 // INITIALIZE
 // ========================================
 
