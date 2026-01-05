@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedChain Indonesia - Healthcare DID PoC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">⛓️</span>
+                <h1>MedChain Indonesia</h1>
+            </div>
+            <p class="subtitle">Proof of Concept: DID + Off-chain Healthcare System</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-view="overview">📋 Overview</button>
+            <button class="nav-btn" data-view="patient">👤 Pasien</button>
+            <button class="nav-btn" data-view="hospital">🏥 Rumah Sakit</button>
+            <button class="nav-btn" data-view="emergency">🚨 Darurat</button>
+            <button class="nav-btn" data-view="blockchain">⛓️ Blockchain</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview View -->
+            <section id="overview" class="view active">
+                <h2>🏗️ Arsitektur Sistem</h2>
+
+                <div class="architecture-diagram">
+                    <div class="arch-layer">
+                        <h3>LAYER 1: Identity (Blockchain)</h3>
+                        <div class="arch-items">
+                            <div class="arch-item">DID Registry</div>
+                            <div class="arch-item">Consent Contracts</div>
+                            <div class="arch-item">Audit Logs</div>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">↕️</div>
+                    <div class="arch-layer">
+                        <h3>LAYER 2: API Gateway</h3>
+                        <div class="arch-items">
+                            <div class="arch-item">Auth Service</div>
+                            <div class="arch-item">Consent Service</div>
+                            <div class="arch-item">Data Exchange</div>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">↕️</div>
+                    <div class="arch-layer">
+                        <h3>LAYER 3: Off-chain Storage</h3>
+                        <div class="arch-items">
+                            <div class="arch-item">RS Database A</div>
+                            <div class="arch-item">RS Database B</div>
+                            <div class="arch-item">Encrypted IPFS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📊 Komponen Utama</h3>
+                        <ul>
+                            <li><strong>DID (Decentralized Identity)</strong> - Identitas digital pasien linked ke NIK
+                            </li>
+                            <li><strong>Smart Contract</strong> - Manage consent & access control</li>
+                            <li><strong>Off-chain Storage</strong> - Data medis tetap di RS masing-masing</li>
+                            <li><strong>API Gateway</strong> - Jembatan antara RS dan blockchain</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>🔐 Fitur Keamanan</h3>
+                        <ul>
+                            <li>End-to-end encryption</li>
+                            <li>Immutable audit trail</li>
+                            <li>Patient-controlled consent</li>
+                            <li>Emergency break-the-glass</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flow-section">
+                    <h3>🔄 Alur Utama Sistem</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="step-num">1</span>
+                            <span class="step-text">Pasien Register DID (linked ke NIK)</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <span class="step-num">2</span>
+                            <span class="step-text">RS Request Access</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <span class="step-num">3</span>
+                            <span class="step-text">Pasien Approve via OTP</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <span class="step-num">4</span>
+                            <span class="step-text">Consent Recorded on Chain</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <span class="step-num">5</span>
+                            <span class="step-text">RS Access Data</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patient View -->
+            <section id="patient" class="view">
+                <h2>👤 Portal Pasien</h2>
+
+                <!-- Patient Registration -->
+                <div class="card">
+                    <h3>📝 Registrasi DID Baru</h3>
+                    <form id="registerForm" class="form">
+                        <div class="form-group">
+                            <label>NIK (16 digit)</label>
+                            <input type="text" id="nik" placeholder="3201234567890001" maxlength="16">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="nama" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lahir</label>
+                            <input type="date" id="tglLahir">
+                        </div>
+                        <div class="form-group">
+                            <label>No. HP (untuk OTP)</label>
+                            <input type="tel" id="noHp" placeholder="08123456789">
+                        </div>
+                        <div class="form-group">
+                            <label>Golongan Darah</label>
+                            <select id="golDarah">
+                                <option value="">Pilih...</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Alergi Obat (pisahkan dengan koma)</label>
+                            <input type="text" id="alergi" placeholder="Penisilin, Aspirin">
+                        </div>
+                        <button type="submit" class="btn btn-primary">🔗 Generate DID</button>
+                    </form>
+                    <div id="registerResult" class="result hidden"></div>
+                </div>
+
+                <!-- Patient Dashboard -->
+                <div class="card" id="patientDashboard" style="display:none;">
+                    <h3>📊 Dashboard Pasien</h3>
+                    <div class="dashboard-info">
+                        <div class="info-row">
+                            <span class="label">DID:</span>
+                            <span class="value" id="displayDid">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Nama:</span>
+                            <span class="value" id="displayNama">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Status:</span>
+                            <span class="value status-active">✅ Active</span>
+                        </div>
+                    </div>
+
+                    <h4>🔐 Consent Management</h4>
+                    <div id="consentList" class="consent-list"></div>
+
+                    <h4>📜 Access History</h4>
+                    <div id="accessHistory" class="access-history"></div>
+                </div>
+            </section>
+
+            <!-- Hospital View -->
+            <section id="hospital" class="view">
+                <h2>🏥 Portal Rumah Sakit</h2>
+
+                <div class="card">
+                    <h3>🔍 Cari Pasien</h3>
+                    <form id="searchPatientForm" class="form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>NIK Pasien</label>
+                                <input type="text" id="searchNik" placeholder="3201234567890001">
+                            </div>
+                            <button type="submit" class="btn btn-primary">🔍 Cari</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card" id="patientFound" style="display:none;">
+                    <h3>👤 Data Pasien Ditemukan</h3>
+                    <div class="patient-info">
+                        <div class="info-row">
+                            <span class="label">DID:</span>
+                            <span class="value" id="foundDid">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Nama:</span>
+                            <span class="value" id="foundNama">-</span>
+                        </div>
+                    </div>
+
+                    <h4>📋 Request Access</h4>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="reqRiwayat"> Riwayat Penyakit</label>
+                        <label><input type="checkbox" id="reqAlergi" checked> Alergi Obat</label>
+                        <label><input type="checkbox" id="reqLab"> Hasil Lab</label>
+                        <label><input type="checkbox" id="reqObat"> Obat yang Dikonsumsi</label>
+                        <label><input type="checkbox" id="reqVaksin"> Riwayat Vaksin</label>
+                    </div>
+                    <button id="requestAccessBtn" class="btn btn-primary">📤 Kirim Request</button>
+                </div>
+
+                <div class="card" id="otpVerification" style="display:none;">
+                    <h3>📱 Menunggu Verifikasi Pasien</h3>
+                    <div class="otp-status">
+                        <div class="spinner"></div>
+                        <p>OTP telah dikirim ke HP pasien: <strong id="maskedPhone">0812-xxxx-xxxx</strong></p>
+                        <p class="small">Pasien harus memasukkan OTP untuk menyetujui akses</p>
+                    </div>
+
+                    <!-- Simulate patient OTP entry -->
+                    <div class="otp-simulate">
+                        <p><em>🎮 Demo: Masukkan OTP sebagai pasien</em></p>
+                        <input type="text" id="otpInput" placeholder="123456" maxlength="6">
+                        <button id="verifyOtpBtn" class="btn">✅ Verifikasi OTP</button>
+                    </div>
+                </div>
+
+                <div class="card" id="accessGranted" style="display:none;">
+                    <h3>✅ Akses Diberikan</h3>
+                    <div class="medical-data">
+                        <div class="data-section">
+                            <h4>🩸 Informasi Dasar</h4>
+                            <div id="basicInfo"></div>
+                        </div>
+                        <div class="data-section" id="riwayatSection" style="display:none;">
+                            <h4>📋 Riwayat Penyakit</h4>
+                            <div id="riwayatData"></div>
+                        </div>
+                        <div class="data-section" id="alergiSection" style="display:none;">
+                            <h4>⚠️ Alergi</h4>
+                            <div id="alergiData"></div>
+                        </div>
+                        <div class="data-section" id="labSection" style="display:none;">
+                            <h4>🔬 Hasil Lab Terakhir</h4>
+                            <div id="labData"></div>
+                        </div>
+                    </div>
+                    <div class="blockchain-record">
+                        <p>⛓️ Akses ini tercatat di blockchain:</p>
+                        <code id="txHash">-</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Emergency View -->
+            <section id="emergency" class="view">
+                <h2>🚨 Emergency Access Protocol</h2>
+
+                <div class="card warning-card">
+                    <h3>⚠️ PERINGATAN</h3>
+                    <p>Emergency access hanya boleh digunakan untuk kondisi darurat medis.</p>
+                    <p>Semua akses akan dicatat secara permanen dan akan di-audit.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🔓 Break-the-Glass Access</h3>
+                    <form id="emergencyForm" class="form">
+                        <div class="form-group">
+                            <label>Staff ID *</label>
+                            <input type="text" id="staffId" placeholder="DOC-12345">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Dokter/Perawat *</label>
+                            <input type="text" id="staffName" placeholder="Dr. Ahmad">
+                        </div>
+
+                        <!-- Identification Method Selection -->
+                        <div class="form-group">
+                            <label>Metode Identifikasi Pasien *</label>
+                            <select id="identMethod">
+                                <option value="nik">📄 NIK (ada KTP)</option>
+                                <option value="biometric">👆 Biometrik (sidik jari/wajah)</option>
+                                <option value="physical">👤 Ciri Fisik (tidak ada ID)</option>
+                                <option value="unknown">❓ Pasien Tidak Dikenal</option>
+                            </select>
+                        </div>
+
+                        <!-- NIK Input -->
+                        <div class="form-group ident-section" id="nikSection">
+                            <label>NIK Pasien</label>
+                            <input type="text" id="emergencyNik" placeholder="3201234567890001">
+                        </div>
+
+                        <!-- Biometric Section -->
+                        <div class="form-group ident-section" id="biometricSection" style="display:none;">
+                            <label>Pemindaian Biometrik</label>
+                            <div class="biometric-scanner">
+                                <div class="scanner-box" id="scannerBox">
+                                    <span class="scanner-icon">👆</span>
+                                    <p>Klik untuk scan sidik jari</p>
+                                </div>
+                                <div class="scanner-status" id="scannerStatus"></div>
+                            </div>
+                            <p class="small">Atau gunakan face recognition:</p>
+                            <button type="button" class="btn" id="faceRecogBtn">📷 Scan Wajah</button>
+                        </div>
+
+                        <!-- Physical Description Section -->
+                        <div class="form-group ident-section" id="physicalSection" style="display:none;">
+                            <label>Ciri Fisik Pasien</label>
+                            <div class="physical-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Jenis Kelamin</label>
+                                        <select id="physGender">
+                                            <option value="male">Laki-laki</option>
+                                            <option value="female">Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Perkiraan Usia</label>
+                                        <input type="text" id="physAge" placeholder="~30 tahun">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Tinggi Badan</label>
+                                        <input type="text" id="physHeight" placeholder="~170 cm">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Berat Badan</label>
+                                        <input type="text" id="physWeight" placeholder="~70 kg">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tanda Khusus</label>
+                                    <textarea id="physMarks" rows="2"
+                                        placeholder="Tato di lengan kiri, bekas luka di dahi, dll"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Barang Bawaan (untuk identifikasi)</label>
+                                    <textarea id="physBelongings" rows="2"
+                                        placeholder="HP Samsung hitam, dompet coklat, cincin kawin, dll"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Unknown Patient Section -->
+                        <div class="form-group ident-section" id="unknownSection" style="display:none;">
+                            <div class="unknown-patient-box">
+                                <h4>👤 Pasien Tidak Dikenal</h4>
+                                <p>Sistem akan membuat ID sementara untuk pasien ini.</p>
+                                <p>Data darurat default akan ditampilkan dengan peringatan.</p>
+                                <div class="form-group">
+                                    <label>Lokasi Ditemukan</label>
+                                    <input type="text" id="foundLocation" placeholder="Jl. Sudirman depan gedung A">
+                                </div>
+                                <div class="form-group">
+                                    <label>Waktu Ditemukan</label>
+                                    <input type="datetime-local" id="foundTime">
+                                </div>
+                                <div class="form-group">
+                                    <label>Kondisi Saat Ditemukan</label>
+                                    <textarea id="foundCondition" rows="2"
+                                        placeholder="Tidak sadar, luka di kepala, dll"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Perkiraan Jenis Kelamin</label>
+                                        <select id="unknownGender">
+                                            <option value="male">Laki-laki</option>
+                                            <option value="female">Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Perkiraan Usia</label>
+                                        <input type="text" id="unknownAge" placeholder="~30 tahun">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Alasan Darurat *</label>
+                            <select id="emergencyReason">
+                                <option value="">Pilih alasan...</option>
+                                <option value="unconscious">Pasien tidak sadar</option>
+                                <option value="accident">Kecelakaan</option>
+                                <option value="cardiac">Serangan jantung</option>
+                                <option value="stroke">Stroke</option>
+                                <option value="trauma">Trauma berat</option>
+                                <option value="overdose">Overdosis</option>
+                                <option value="other">Lainnya (jelaskan)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="otherReasonGroup" style="display:none;">
+                            <label>Jelaskan alasan</label>
+                            <textarea id="otherReason" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="confirmEmergency">
+                                Saya menyatakan ini adalah kondisi darurat dan bertanggung jawab atas akses ini
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-danger" disabled id="emergencyBtn">🚨 EMERGENCY
+                            ACCESS</button>
+                    </form>
+                </div>
+
+                <div class="card" id="emergencyResult" style="display:none;">
+                    <h3>🔓 Emergency Data Retrieved</h3>
+                    <div class="emergency-data">
+                        <div class="critical-info">
+                            <h4>⚠️ CRITICAL INFO</h4>
+                            <div id="emergencyBasic"></div>
+                        </div>
+                        <div class="full-record" id="emergencyFull"></div>
+                    </div>
+                    <div class="emergency-log">
+                        <h4>📝 Logged to Blockchain</h4>
+                        <div id="emergencyLog"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blockchain View -->
+            <section id="blockchain" class="view">
+                <h2>⛓️ Blockchain Explorer</h2>
+
+                <div class="card">
+                    <h3>📊 Network Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalDids">0</span>
+                            <span class="stat-label">Total DIDs</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalConsents">0</span>
+                            <span class="stat-label">Active Consents</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalAccess">0</span>
+                            <span class="stat-label">Access Logs</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="blockHeight">0</span>
+                            <span class="stat-label">Block Height</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📜 Recent Transactions</h3>
+                    <div id="recentTx" class="tx-list"></div>
+                </div>
+
+                <div class="card">
+                    <h3>🔍 Search Transaction</h3>
+                    <div class="form-row">
+                        <input type="text" id="searchTx" placeholder="0x...">
+                        <button class="btn" id="searchTxBtn">🔍 Search</button>
+                    </div>
+                    <div id="txResult" class="tx-detail hidden"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>MedChain Indonesia - Proof of Concept</p>
+            <p class="small">DID + Off-chain Healthcare System | Black & White Demo</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

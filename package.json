@@ -1,0 +1,16 @@
+{
+  "name": "healthcare-did-backend",
+  "version": "1.0.0",
+  "description": "Real local backend for Healthcare DID PoC with SQLite and file-based blockchain",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "sql.js": "^1.10.3",
+    "crypto-js": "^4.2.0"
+  }
+}
